@@ -1,0 +1,810 @@
+extraction_numerical_prompt : |
+  Extract and transcribe all content from this student's handwritten work using markdown with LaTeX formatting.
+
+  **TRANSCRIPTION GUIDELINES:**
+
+  **1. ACCURACY & FIDELITY:**
+  - Read character by character for maximum accuracy
+  - Preserve every mathematical error exactly as written
+  - Never assume correct operations if student wrote something incorrect
+  - For illegible handwriting (not math content), use context to determine unclear characters
+
+  **2. MATHEMATICAL NOTATION:**
+  - Use LaTeX for all mathematical expressions
+  - Inline math: $expression$
+  - Block equations: $$expression$$
+  - Preserve student's equation numbering (e.g., if student writes "x + y = 2 -- (1)", transcribe as "Equation (1): $x + y = 2$")
+
+  **3. STRIKE-THROUGH & CORRECTIONS:**
+  - Strike-through for simplification: Show only the final simplified result
+  - Completely crossed-out work: Note "[crossed out]" but transcribe visible content
+  - Diagonal cancellations in fractions: Show the simplified form with a note
+
+  **4. STRUCTURE & FLOW:**
+  - Use markdown headings, bullet points for organization
+  - Maintain spatial alignment and logical order
+  - If student's progression jumps around, add notes like "Student's next step appears to be:"
+  - Preserve step-by-step numbering as student wrote it
+
+  **5. VISUAL ELEMENTS:**
+  - For diagrams/graphs: Include description in `<figure_description></figure_description>` tags
+  - Describe variables, labels, and key features shown
+
+  **EXAMPLE OUTPUT:**
+  Simplifying the Expression
+  $$(x^2 + 2x + 2)(x^2 - 2x + 2)$$
+
+  Rearranging terms to use difference of squares formula:
+  $$[(x^2 + 2) + 2x][(x^2 + 2) - 2x]$$
+
+  Applying $(a + b)(a - b) = a^2 - b^2$
+  $$= (x^2 + 2)^2 - (2x)^2$$
+  $$= x^4 + 4x^2 + 4 - 4x^2$$
+  $$= x^4 + 4$$
+
+  Begin transcription:
+
+solution_pathway_analysis_numerical_prompt : |
+  **QUESTION CONTEXT:**
+  Grade Level: {grade_level}
+  Subject: {subject}
+  Chapter: {chapter}
+
+  **QUESTION:** 
+  {question}
+
+  **STANDARD APPROACH (Steps):**
+  {steps_description}
+
+  **STUDENT'S ANSWER:**
+  {student_answer}
+
+  **ANALYSIS REQUIRED:**
+  Analysis Framework:
+  Step 1: Method Identification
+
+  What specific approach/method did the student use?
+  What is the logical sequence of their solution steps?
+
+  Step 2: Validity Assessment
+
+  Is the student's chosen method mathematically sound? (Yes/No with brief explanation)
+  Are there any fundamental mathematical errors in reasoning?
+
+  Step 3: Comparison Analysis
+
+  How does the student's approach relate to the standard method?
+  If different, does it demonstrate valid mathematical problem-solving?
+
+  Step 4: Classification Decision
+  Based on your analysis above, classify the solution into one of the three categories and provide a concise justification (2-3 sentences) explaining your classification.
+  Special Cases:
+
+  Mixed approaches: If student combines standard and alternative methods, classify based on the dominant approach
+  Incomplete work: Classify based on the approach evident in the shown work
+  Correct answer, wrong method: Focus on the method validity, not the final answer
+  Multiple attempts: Analyze the student's final or most complete attempt
+  
+content_analysis_standard_numerical_prompt : | 
+  **QUESTION CONTEXT:**
+  Grade Level: {grade_level}
+  Subject: {subject}
+  Chapter: {chapter}
+
+  **QUESTION:** 
+  {question}
+
+  **STANDARD APPROACH (Steps):**
+  {steps_description}  
+
+  **DETAILED WORKED EXAMPLE:**
+  {sample_solution_with_steps}
+
+  **STUDENT'S ANSWER:**
+  {student_answer}
+
+  This particular student answer is classifed as STANDARD APPROACH because: {reason_for_classification}
+  --------------------------
+  **DEATILED STEP ANALYSIS:**
+  For each step of the STANDARD APPROACH in students work, Carry out the following analysis (expect for the missing steps)
+
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  - What mathematical operation/concept did they apply or tried to apply?
+  - Is this step conceptually appropriate for the problem?
+  - How does this step relate to the overall solution strategy?
+  - Does the student demonstrate understanding of the underlying mathematical concepts?
+  - Are there signs of conceptual confusion or misconceptions?
+
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  - Are all mathematical expressions correctly written?
+  - Are calculations performed correctly?
+  - Are formulas applied properly?
+  - Are units handled correctly throughout?
+
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  If previous step has errors:
+  - did the student correctly apply subsequent operations based on their (possibly incorrect) intermediate results?
+  - Which errors propagated through the solution?
+  - Would this step be correct if earlier errors hadn't occurred?
+
+  **4. DETAILED ERROR IDENTIFICATION:**(if any)
+  For each error found in the step, specify:
+  - Type of error (conceptual, computational, algebraic manipulation, etc.)
+  - Specific description of what went wrong(if the step/outcome of the step is present in the standard solution - call out the error with comparison)
+  - What the correct action should have been
+  - Severity level(minor computational slip vs major conceptual error)
+
+  **5. FINAL ANSWER EVALUATION :**(if any)
+  - Is the final numerical answer correct?
+  - Is the final answer in the correct format/units?
+  - Does the final answer make sense in the context of the problem?
+  
+  Provide a comprehensive analysis without assigning any scores or grades. 
+
+  Also copy the MARK DISTRIBUTION for each step from DETAILED WORKED EXAMPLE. 
+  
+  EXAMPLE SCENARIO:
+  **QUESTION CONTEXT:**
+  Grade Level: 12
+  Subject: Maths
+  Chapter: Application of Derivatives
+
+  **QUESTION:** 
+  The volume of a sphere is increasing at the rate of 3 cm³/sec. Find the rate of increase of its surface area when the radius is 2 cm.
+  
+  **STANDARD APPROACH (Steps):**
+  Step 1: Write the equation for volume, differentiate w.r.t time t, and solve for dr/dt  
+  Step 2: Write the equation for surface area, differentiate w.r.t time t, substitute dr/dt, and solve for ds/dt at r = 2cm  
+
+  **DETAILED WORKED EXAMPLE:**
+  Step 1: Write the equation for volume, differentiate w.r.t time t, and solve for dr/dt (1 mark)
+  Some Compuations.....
+  Step 2: Write the equation for surface area, differentiate w.r.t time t, substitute dr/dt, and solve for ds/dt at r = 2cm(1 mark)
+  Some Compuations.....
+
+  **STUDENT'S ANSWER:**
+  A Sample student answer ....
+
+  EXPECTED OUTPUT:
+  **DEATILED STEP ANALYSIS:**
+  Step 1: Write the equation for volume, differentiate w.r.t time t, and solve for dr/dt (MAX 1 mark)
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+
+  Step 2: Write the equation for surface area, differentiate w.r.t time t, substitute dr/dt, and solve for ds/dt at r = 2cm (MAX 1 mark)
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+
+  **NOTE** :If that particular step is missing, Detailed step analysis should mention step missing in students work.
+
+content_analysis_alternative_numerical_prompt : |
+  **QUESTION CONTEXT:**
+  Grade Level: {grade_level}
+  Subject: {subject}
+  Chapter: {chapter}
+
+  **QUESTION:** 
+  {question}
+
+  **STUDENT'S ANSWER:**
+  {student_answer}
+
+  This particular student answer is classifed as Acceptable Alternative approach because: {reason_for_classification}
+  --------------------------
+  ONLY FOR Reference: Here is the STANDARD APPROACH step breakdown, student may have chosen a different step altogather:
+  **STANDARD APPROACH (Steps):**
+  {steps_description}  
+
+  ONLY FOR Reference: Use this to check correct values or intermediate and final answers. 
+  **DETAILED WORKED EXAMPLE:**
+  {sample_solution_with_steps}
+  --------------------------
+  TASK 1: 
+  **STEP-BY-STEP BREAKDOWN:**
+  - What are the steps taken by the student to arrive at the answer ? 
+  - Fragmentize the students answer into meaningful steps keeping STANDARD APPROACH as a Reference 
+  - While identifying steps, Do not fragmentize into too many steps, it should be ideally equal to no of steps in STANDARD APPROACH
+  - Also identify when CRITICAL STEPS missing in students answer and include it in numbered list(indicate: missing in students work!)
+  ---------------------------
+  TASK 2: 
+  **DEATILED STEP ANALYSIS:**
+  For each step of students work, Carry out the following analysis
+
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  - What mathematical operation/concept did they apply or tried to apply?
+  - Is this step conceptually appropriate for the problem?
+  - How does this step relate to the overall solution strategy?
+  - Does the student demonstrate understanding of the underlying mathematical concepts?
+  - Are there signs of conceptual confusion or misconceptions?
+
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  - Are all mathematical expressions correctly written?
+  - Are calculations performed correctly?
+  - Are formulas applied properly?
+  - Are units handled correctly throughout?
+
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  If previous step has errors:
+  - did the student correctly apply subsequent operations based on their (possibly incorrect) intermediate results?
+  - Which errors propagated through the solution?
+  - Would this step be correct if earlier errors hadn't occurred?
+
+  **4. DETAILED ERROR IDENTIFICATION:**(if any)
+  For each error found in the step, specify:
+  - Type of error (conceptual, computational, algebraic manipulation, etc.)
+  - Specific description of what went wrong(if the step/outcome of the step is present in the standard solution - call out the error with comparison)
+  - What the correct action should have been
+  - Severity level(minor computational slip vs major conceptual error)
+
+  **5. FINAL ANSWER EVALUATION :**(if any)
+  - Is the final numerical answer correct?
+  - Is the final answer in the correct format/units?
+  - Does the final answer make sense in the context of the problem?
+
+  TASK 3:
+  **MARK DISTRIBUTION**:
+  Distribute the MAX marks of the question to student's steps(also to missing steps) 
+
+  Provide a comprehensive analysis without assigning any scores or grades. 
+  ---------------------------------
+  OUTPUT Structure:
+  **STEP-BY-STEP BREAKDOWN:**
+  step 1: Sample step 1
+  step 2: Sample step 2
+  step 3: Sample step 3
+
+  **DEATILED STEP ANALYSIS:**
+  Step 1: Sample step 1 (MAX 1 mark) 
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+
+  Step 2: Sample Step 2 (MAX 1 mark)
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+
+  Step 3: Sample Step 2 (MAX 1 mark)
+  Step Missing in studnet's work
+
+  **NOTE** :If that particular step is missing, Detailed step analysis should mention "Step Missing in studnet's work"
+
+content_analysis_irrelevant_numerical_prompt : | 
+  **QUESTION CONTEXT:**
+  Grade Level: {grade_level}
+  Subject: {subject}
+  Chapter: {chapter}
+
+  **QUESTION:** 
+  {question}
+
+  **STANDARD APPROACH(Steps):**
+  {steps_description}  
+
+  **DETAILED WORKED EXAMPLE:**
+  {sample_solution_with_steps}
+
+  **STUDENT'S ANSWER:**
+  {student_answer}
+  --------------------------
+  The above student answer is classified as : Irrelevant because {reason_for_classification}
+
+  But Analyse the studnet answer again to see if: 
+
+  **Does any steps indicate some conceptual understanding of focus area of the question?**
+  If yes, Then generate short criteria(with consie description) for which the studnet can be awarded partial credits
+  **EXAMPLE OUPUT**:(when student showed some mathematical understanding)
+  Criteria: Trignometric identies 
+  Showed correct use of Trignometric identies even though incorrect intital formula is used
+
+  If this solution is tottaly unrelated or irrelevant, then say Criteria :Incorrect Solution
+  **EXAMPLE OUPUT**:
+  Criteria : Incorrect solution 
+  Student didn't show any mathematical understanding relevant to question. 
+
+feedback_generation_standard_numerical_prompt : |
+  **QUESTION DETAILS:**
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+  Question: {question}
+  --------------------
+  ** The DETAILED CONTENT ANALYSIS:** Contains Step-by-step
+  Step description and Max Mark for this step(X marks), followed by 
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+  
+  Here is the content analysis of students work: 
+
+  {content_analysis_output}
+  -------------------------------------
+  **GRADING TASK:**
+  Total Maximum Marks: {max_marks}
+  1. Evalaute step-by-step:
+    - Criteria: Generate Consise version of step description
+    - How many marks should this step receive out of X marks allocated to this step.[ Marks awarded[0, 0.5, 1.0, 1.5, etc.] / Max marks for the step ]
+    - What is the very consise version of error/correctness, that we can CALL OUT against this step.[ONE LINE CALLOUT of specific error if any or comment on correctness]
+  2. Calculate total marks and over all feedback
+    - Total Marks Awarded / Max Marks for question 
+    - Concise over all feedback for the student answer
+  3. Return Mark 
+    - Sum of marks awarded for each step
+  
+  **GRADING GUIDELINES:**
+  - If that particular step is missing in students work, award zero marks for that step and the callout should be "Step missing"
+  - Are major errors in the focus area? --> (Higher penalty compared to total marks for the step)
+  - Minor error or calcualtion mistakes account for 0.5 marks deductions. 
+  - A student should be penelised for a error only once, if follow through analysis is reasonable, give marks for the step according to follow through steps. 
+  
+  **FINAL VERIFICATION**
+  - Total marks awarded: [Sum of marks recieved for each step]
+  - Maximum marks available: {max_marks}
+  - Verification: Total ≤ Maximum? [Yes/No]
+  - If No, adjust marks proportionally 
+
+  **EXPECTED STRUCTURED OUTPUT**:
+  "criteria": [
+  ["Equation for volume, differentiate w.r.t time t, and solve for dr/dt", "1/1", "Correct volume equation, differetiation and value or dr/dt "],
+  ["Equation for surface area, differentiate w.r.t time t, substitute dr/dt, and solve for ds/dt at r = 2cm","0.5/1","Correct Surface area equation and differentiation, but incorrect substitution for dr/dt"]],
+  "total_points": ["1.5/2","The student demostrated clear understanding of differentiation and rate of change of measurements but made a careless substitution error"],
+  "mark": 1.5
+  **NOTE** : If that particular step is missing, content of the list should be : ["0/X", "Step missing"]
+  
+  **OUTPUT STYLE(while generating comments):
+  When referencing mathematical equations in comments, please convert LaTeX notation to readable Unicode format using the following rules:
+  DONOT use LaTeX syntax with in $ $ symbols or backslashes, always use readable Unicode format.
+
+  **Superscripts (exponents):**
+  - Convert ^1 to ¹, ^2 to ², ^3 to ³, ^4 to ⁴, ^5 to ⁵, ^6 to ⁶, ^7 to ⁷, ^8 to ⁸, ^9 to ⁹, ^0 to ⁰
+  - For variables: ^n to ⁿ, ^x to ˣ, ^y to ʸ, etc.
+
+  **Subscripts:**
+  - Convert _1 to ₁, _2 to ₂, _3 to ₃, _4 to ₄, _5 to ₅, _6 to ₆, _7 to ₇, _8 to ₈, _9 to ₉, _0 to ₀
+  - For variables: _n to ₙ, _x to ₓ, _i to ᵢ, etc.
+
+  **Mathematical symbols:**
+  - Replace \cdot with ·
+  - Replace \times with ×
+  - Replace \div with ÷
+  - Replace \pm with ±
+  - Replace \mp with ∓
+  - Replace \leq with ≤
+  - Replace \geq with ≥
+  - Replace \neq with ≠
+  - Replace \approx with ≈
+  - Replace \infty with ∞
+  - Replace \pi with π
+  - Replace \alpha with α, \beta with β, \gamma with γ, etc.
+
+  **Fractions:**
+  - Convert \frac to a/b format
+  - For complex fractions, use parentheses: (a+b)/(c+d)
+
+  **Examples:**
+  - $x^4 + 4x^2 + 4$ becomes x⁴ + 4x² + 4
+  - $(a+b) \cdot (a-b)$ becomes (a+b) · (a-b)
+  Always use this readable Unicode format when referencing equations in your comments, never use LaTeX syntax with in $ $ symbols or backslashes.
+
+feedback_generation_irrelevant_numerical_prompt : |
+  **QUESTION DETAILS:**
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+  Question: {question}
+  --------------------
+  The student answer is classified as :Incorrect
+  Reason: {reason_for_classification}
+
+  Here is the content analysis of students work: 
+  {content_analysis_output}
+  --------------------------------
+  **GRADING TASK:**
+  Total Maximum Marks: {max_marks}
+  1. Award partial credits for Conceptual Undertsanding(if applicable):
+    - Criteria: Generate Consise version of Criteria for which partal credits are awarded. 
+    ( For No relevant mathematical understanding, criteria should be "Incorrect solution" )  
+    - How many marks should this critria receive as a partial credit considering the total marks for the question, Marks awarded[0, 0.5, 1.0, 1.5, etc.] 
+    (if the shown mathematical undertsanding is totaly unrelated to question then award zero marks.) 
+    - What is the very consise version of error/correctness, that we can CALL OUT against the Criteria.[comment on correctness/undertsanding]
+  2. Calculate total marks and over all feedback
+    - Total Marks Awarded / Max Marks for question 
+    - Concise over all feedback for the student answer(Reason of Incorrect solution)
+  3. Return Mark 
+    - Total Marks
+  
+  **EXPECTED STRUCTURED OUTPUT**:
+  "criteria": [
+  ["Trignometric identies", "0.5", "Showed correct use of Trignometric identies even though incorrect intital formula is used"]]
+  "total_points": ["0.5/2","Student showed understanding of trignometric identies but committe inital formulation erros"],
+  "mark": 0.5
+  **NOTE** : If no criteria for partial credits are there, "criteria" will be empty list
+  
+  **OUTPUT STYLE(while generating comments):
+  When referencing mathematical equations in comments, please convert LaTeX notation to readable Unicode format using the following rules:
+  DONOT use LaTeX syntax with in $ $ symbols or backslashes, always use readable Unicode format.
+
+  **Superscripts (exponents):**
+  - Convert ^1 to ¹, ^2 to ², ^3 to ³, ^4 to ⁴, ^5 to ⁵, ^6 to ⁶, ^7 to ⁷, ^8 to ⁸, ^9 to ⁹, ^0 to ⁰
+  - For variables: ^n to ⁿ, ^x to ˣ, ^y to ʸ, etc.
+
+  **Subscripts:**
+  - Convert _1 to ₁, _2 to ₂, _3 to ₃, _4 to ₄, _5 to ₅, _6 to ₆, _7 to ₇, _8 to ₈, _9 to ₉, _0 to ₀
+  - For variables: _n to ₙ, _x to ₓ, _i to ᵢ, etc.
+
+  **Mathematical symbols:**
+  - Replace \cdot with ·
+  - Replace \times with ×
+  - Replace \div with ÷
+  - Replace \pm with ±
+  - Replace \mp with ∓
+  - Replace \leq with ≤
+  - Replace \geq with ≥
+  - Replace \neq with ≠
+  - Replace \approx with ≈
+  - Replace \infty with ∞
+  - Replace \pi with π
+  - Replace \alpha with α, \beta with β, \gamma with γ, etc.
+
+  **Fractions:**
+  - Convert \frac to a/b format
+  - For complex fractions, use parentheses: (a+b)/(c+d)
+
+  **Examples:**
+  - $x^4 + 4x^2 + 4$ becomes x⁴ + 4x² + 4
+  - $(a+b) \cdot (a-b)$ becomes (a+b) · (a-b)
+  Always use this readable Unicode format when referencing equations in your comments, never use LaTeX syntax with in $ $ symbols or backslashes.
+
+feedback_generation_alternative_numerical_prompt : |
+  **QUESTION DETAILS:**
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+  Question: {question}
+  --------------------
+  ** The DETAILED CONTENT ANALYSIS:** Contains Step-by-step
+  Step description and Mark Allocated for this step(X marks), followed by 
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+  
+  Here is the content analysis of students work: 
+
+  {content_analysis_output}
+  -------------------------------------
+  **GRADING TASK:**
+  Total Maximum Marks: {max_marks}
+  1. Evalaute step-by-step:
+    - Criteria: Generate Consise version of step description
+    - How many marks should this step receive out of X marks allocated to this step.[ Marks awarded[0, 0.5, 1.0, 1.5, etc.] / Max marks for the step ]
+    - What is the very consise version of error/correctness, that we can CALL OUT against this step.[ONE LINE CALLOUT of specific error if any or comment on correctness]
+  2. Calculate total marks and over all feedback
+    - Total Marks Awarded / Max Marks for question 
+    - Concise over all feedback for the student answer
+  3. Return Mark 
+    - Sum of marks awarded for each step
+  
+  **GRADING GUIDELINES:**
+  - If that particular step is missing in students work, award zero marks for that step and the callout should be "Step missing"
+  - Are major errors in the focus area? --> (Higher penalty compared to total marks for the step)
+  - Minor error or calcualtion mistakes account for 0.5 marks deductions. 
+  - Follow Incremental Marking: Use 0.5 mark increments (0, 0.5, 1.0, 1.5, etc...)
+  - Round mark alloted to a step to nearest 0.5 mark decrement(if 0.8 round off to 0.5, if 0.2 round off to 0.0)
+  - DO NOT PENELISE ANY SPELLING or GRAMMATICAL ERRORS, we are evaluating science and not language skills.
+  - A student should be penelised for a error only once, if follow through analysis is reasonable, give marks for the step according to follow through steps. 
+  
+  **FINAL VERIFICATION**
+  - ONLY INCREMENTS of 0.5 is used in markings.
+  - Total marks awarded: [Sum of all value points]
+  - Maximum marks available: {max_marks}
+  - Verification: Total ≤ Maximum? [Yes/No]
+  - If No, adjust marks proportionally 
+
+  **EXPECTED STRUCTURED OUTPUT**:
+  "criteria": [
+  ["Equation for volume, differentiate w.r.t time t, and solve for dr/dt", "1/1", "Correct volume equation, differetiation and value or dr/dt "],
+  ["Equation for surface area, differentiate w.r.t time t, substitute dr/dt, and solve for ds/dt at r = 2cm","0.5/1","Correct Surface area equation and differentiation, but incorrect substitution for dr/dt"]],
+  "total_points": ["1.5/2","The student demostrated clear understanding of differentiation and rate of change of measurements but made a careless substitution error"],
+  "mark": 1.5
+  **NOTE** : If that particular step is missing, content of the list should be : ["0/X", "Step missing "]
+  
+  **OUTPUT STYLE(while generating comments):
+  When referencing mathematical equations in comments, please convert LaTeX notation to readable Unicode format using the following rules:
+  DONOT use LaTeX syntax with in $ $ symbols or backslashes, always use readable Unicode format.
+
+  **Superscripts (exponents):**
+  - Convert ^1 to ¹, ^2 to ², ^3 to ³, ^4 to ⁴, ^5 to ⁵, ^6 to ⁶, ^7 to ⁷, ^8 to ⁸, ^9 to ⁹, ^0 to ⁰
+  - For variables: ^n to ⁿ, ^x to ˣ, ^y to ʸ, etc.
+
+  **Subscripts:**
+  - Convert _1 to ₁, _2 to ₂, _3 to ₃, _4 to ₄, _5 to ₅, _6 to ₆, _7 to ₇, _8 to ₈, _9 to ₉, _0 to ₀
+  - For variables: _n to ₙ, _x to ₓ, _i to ᵢ, etc.
+
+  **Mathematical symbols:**
+  - Replace \cdot with ·
+  - Replace \times with ×
+  - Replace \div with ÷
+  - Replace \pm with ±
+  - Replace \mp with ∓
+  - Replace \leq with ≤
+  - Replace \geq with ≥
+  - Replace \neq with ≠
+  - Replace \approx with ≈
+  - Replace \infty with ∞
+  - Replace \pi with π
+  - Replace \alpha with α, \beta with β, \gamma with γ, etc.
+
+  **Fractions:**
+  - Convert \frac to a/b format
+  - For complex fractions, use parentheses: (a+b)/(c+d)
+
+  **Examples:**
+  - $x^4 + 4x^2 + 4$ becomes x⁴ + 4x² + 4
+  - $(a+b) \cdot (a-b)$ becomes (a+b) · (a-b)
+  Always use this readable Unicode format when referencing equations in your comments, never use LaTeX syntax with in $ $ symbols or backslashes.
+
+extraction_textual_prompt : |
+  Extract and transcribe all content from this student's handwritten work using markdown with LaTeX formatting.
+
+  **TRANSCRIPTION GUIDELINES:**
+
+  **1. ACCURACY & FIDELITY:**
+  - Read character by character
+  - correct any spelling errors by analysing the context 
+  - Preserve every mathematical error exactly as written
+  - For illegible handwriting (not math content), use context to determine unclear characters and words.
+
+  **2. MATHEMATICAL NOTATION:**
+  - Use LaTeX for all mathematical expressions
+  - Inline math: $expression$
+  - Block equations: $$expression$$
+  - Preserve student's equation numbering (e.g., if student writes "x + y = 2 -- (1)", transcribe as "Equation (1): $x + y = 2$")
+
+  **3. STRIKE-THROUGH & CORRECTIONS:**
+  - Strike-through for simplification: Show only the final simplified result
+  - Completely crossed-out work: Note "[crossed out]" but transcribe visible content
+
+  **4. STRUCTURE & FLOW:**
+  - Use markdown headings, bullet points for organization
+  - Maintain spatial alignment and logical order
+  - If student's progression jumps around, add notes like "Student's next step appears to be:"
+  - Preserve step-by-step numbering as student wrote it
+
+  **5. VISUAL ELEMENTS:**(in Any)
+  The deatiled decription should have the following fields: Include these in `<figure_drawn_by_student></figure_drawn_by_student>` tags
+  Describe the diagram/graph in detail, including any mathematical or scientific context
+  Labels, axes, and key features shown(if applicable): list out all labels, axes, and key features present in the diagram/graph
+  
+  **EXAMPLE OUTPUT:**
+  The unbalanced equation for methane combustion is:
+  $CH_4 + O_2 \rightarrow CO_2 + H_2O$
+  Begin transcription:
+
+extraction_textual_prompt_image: |
+  Analyse the freehand drawing and transcribe all content from this student's handwritten work using markdown with LaTeX formatting.
+  
+  TASK 1: **DRAWING ANALYSIS:**(in Case drawaings missing, indicate that drawings are missing)
+  The deatiled decription should have the following fields: Include these in `<figure_drawn_by_student></figure_drawn_by_student>` tags
+  1)Description: Describe the diagram/graph in detail, including any mathematical or scientific context
+  2)Labels, axes, and key features shown(if applicable): list out all labels, axes, and key features present in the diagram/graph
+  3)Comment on correctness of the diagram/graph and its relevance to the problem
+  4)Comment on correctness of labels,axes units used in the diagram/graph: Idenfify if the studnet have correctly used each labels, axes and units in the diagram/graph. IGNORE SPELLING ERRORS 
+  5)Comment on Arrows indicating processes/flows, must show correct directionality
+
+  TASK 2: **TRANSCRIPTION OF TEXTUAL CONTENT:**(if any)
+  **TRANSCRIPTION GUIDELINES:**
+  **1. ACCURACY & FIDELITY:**
+  - Read character by character. Correct any spelling errors by analysing the context
+  - Preserve every mathematical error exactly as written
+  - For illegible handwriting (not math content), use context to determine unclear characters and words.
+
+  **2. MATHEMATICAL NOTATION:**
+  - Use LaTeX for all mathematical expressions
+  - Inline math: $expression$
+  - Block equations: $$expression$$
+  - Preserve student's equation numbering (e.g., if student writes "x + y = 2 -- (1)", transcribe as "Equation (1): $x + y = 2$")
+
+  **3. STRIKE-THROUGH & CORRECTIONS:**
+  - Strike-through for simplification: Show only the final simplified result
+  - Completely crossed-out work: Note "[crossed out]" but transcribe visible content
+
+  **4. STRUCTURE & FLOW:**
+  - Use markdown headings, bullet points for organization
+  - Maintain spatial alignment and logical order
+  - If student's progression jumps around, add notes like "Student's next step appears to be:"
+  - Preserve step-by-step numbering as student wrote it
+
+  **EXAMPLE OUTPUT STRUCTURE:**
+  <figure_drawn_by_student>
+  1) Description: <A consie description of the diagram goes here>
+  2) Labels, axes, and key features shown:
+    <list of labels, that student has used in the diagram goes here>
+  3) Comment on correctness of the diagram/graph and its relevance to the problem:
+    <Give a comment on the correctness of the diagram/graph and its relevance to the problem goes here>
+  4) Comment on correctness of labels, axes units used in the diagram/graph:(List one-by-one)
+    < Label 1(if any): Correct/incorrect , very short reason for incorrectness if any>
+    < Label 2(if any): Correct/incorrect , very short reason for incorrectness if any>
+    < Units used(if any): Correct/incorrect , very short reason for incorrectness if any>
+    < Axes used(if any): Correct/incorrect , very short reason for incorrectness if any>
+  5) Comment on Arrows indicating processes/flows, must show correct directionality: 
+    <Give a comment on the correctness of arrows indicating processes/flows, must show correct directionality goes here>
+  </figure_drawn_by_student>
+  
+  TRANSCRIPTION OF TEXTUAL CONTENT:**(if any)
+  < any textual content that student has written apart from the drawing goes here>
+
+content_analysis_textual_prompt : |
+  **QUESTION DETAILS:**
+  Question: {question}
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+
+  **GOLDEN STANDARD SOLUTION BREAKDOWN:**
+  {sample_solution_with_mark_breakdown}
+
+  **STUDENT'S EXTRACTED ANSWER:**
+  {student_answer}
+  ---------------------------
+  **DETAILED STEP ANALYSIS:**
+  For each step of the "GOLDEN STANDARD SOLUTION BREAKDOWN" in student's work, carry out the following analysis (except for missing steps)
+
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  - Check for correct scientific understanding and principles (ignore spelling/grammar errors)
+  - Students can use alternative correct terminology or simpler expressions if they convey the right concept
+  - Is the core concept understood, even if expressed differently than the golden standard?
+  - Factual accuracy (specific details, measurements, units, chemical formulas - focus on scientific accuracy, not presentation)
+  - Causal relationships and mechanisms (processes, sequences, interactions)
+
+  **2. DIAGRAM AND VISUAL INTERPRETATION:(if any)**
+  (If the student has included any diagrams, graphs, or visual representations, the student's extracted answer will include <figure_drawn_by_student></figure_drawn_by_student> tags)
+  Using information from the <figure_drawn_by_student></figure_drawn_by_student> tags:
+  Be lenient - accuracy and details in drawings are not expected, but they should be relevant, meaningful and should include expected labels.
+  - Are core expectations mentioned in the GOLDEN STANDARD SOLUTION BREAKDOWN met for this step?(yes/no)
+
+  **3. DETAILED ERROR IDENTIFICATION:(if any)**
+  EXCLUDE: spelling errors, grammatical errors, capitalization errors, or diagram/visual issues (covered above)
+  FOCUS ONLY ON: Scientific/conceptual errors that affect understanding
+  For each conceptual error found:
+  - Type of error (conceptual misunderstanding, factual inaccuracy, procedural error, etc.)
+  - Specific description of the scientific misconception
+  - What the correct scientific understanding should be
+
+  Remember: Students may express understanding in various ways - focus on whether the core concept is grasped, not whether it matches the golden standard's wording or detail level.
+
+  Provide a comprehensive analysis without assigning any scores or grades.
+  Also copy the MARK DISTRIBUTION for each step from GOLDEN STANDARD SOLUTION BREAKDOWN.
+
+  **NOTE**: If a particular step is missing, mention "Step missing in student's work" under that step's analysis.
+
+feedback_generation_textual_prompt: |
+  **QUESTION DETAILS:**
+  Question: {question}
+  Total Maximum Marks: {max_marks}
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+
+  **DETAILED STEP ANALYSIS:** Contains point-by-point
+  Step description and Max Marks for this step(X marks), followed by 
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. Diagram and Visual Interpretation:(if any)**
+  **3. DETAILED ERROR IDENTIFICATION:**(if any)
+
+  Here is the content analysis of student's work: 
+
+  {content_analysis_output}
+
+  ---------------------------
+  **GRADING TASK:**
+  Total Maximum Marks: {max_marks}
+  1. Evaluate step-by-step:
+    - Criteria: Generate concise version of step description
+    - How many marks should this step receive out of X marks allocated to this step [Marks awarded[0, 0.5, 1.0, 1.5, etc.] / Max marks for the step]
+    - What is the very concise version of error/correctness that we can call out against this step [ONE LINE CALLOUT of specific error if any or comment on correctness]
+
+  2. Calculate total marks and overall feedback
+    - Total Marks Awarded / Max Marks for question 
+    - Concise overall feedback for the student answer
+
+  3. Return Mark 
+    - Sum of marks awarded for each step
+
+  **GRADING GUIDELINES:**
+  - NEVER penalize spelling, grammatical, or presentation errors - focus solely on scientific understanding
+  - Award marks when core concepts are demonstrated, even if brief or lacking minor details
+  - Think: "Does the student understand this concept?" rather than "Is this exactly like the standard?"
+  - If a particular step is missing in student's work, award zero marks for that step and the callout should be "Step missing"
+  - Use incremental marking: 0.5 mark increments (0, 0.5, 1.0, 1.5, etc.)
+  - Round marks to nearest 0.5 increment (0.8→1.0, 0.3→0.5, 0.2→0.0)
+  - Be LENIENT on accuracy and details in drawings - only check if they are relevant and meaningful
+
+  **MARKING PHILOSOPHY:**
+  - Full marks: Core concept understood (regardless of detail level)
+  - Partial marks: Some understanding but missing key elements  
+  - Zero marks: No conceptual understanding or major misconceptions
+
+  **FINAL VERIFICATION**
+  - ONLY increments of 0.5 should be used as marks
+  - Marks should NOT be deducted for spelling or grammatical errors
+  - Total marks awarded: [Sum of marks received for each step]
+  - Maximum marks available: {max_marks}
+  - Verification: Total ≤ Maximum? [Yes/No]
+  - If No, adjust marks proportionally 
+
+  **EXAMPLE STRUCTURED OUTPUT:**
+  "Criteria": [
+  ["Function of ovary", "1/1", "Correctly identified the key functions of the ovary"],
+  ["Function of Fallopian Tube","0.5/1","Shows understanding but missing fertilization site detail"]]
+  "mark": 1.5,
+  "total_points": ["1.5/2","Good understanding of reproductive system functions with minor gaps in detail"],
+  
+value_point_assesment_prompt : |
+  **QUESTION DETAILS:**
+  Grade Level: {grade_level}
+  Chapter/Topic: {chapter}
+  Subject: {subject}
+  Question: {question}
+  -------------------------
+  ** The DETAILED CONTENT ANALYSIS:** Contains Step-by-step
+  Step description and Max Marks for this step(X marks), followed by 
+  **1. CONCEPTUAL ACCURACY CHECK:**
+  **2. MATHEMATICAL ACCURACY CHECK:**
+  **3. FOLLOW-THROUGH ANALYSIS:**(if applicable)
+  **4. DETAILED ERROR IDENTIFICATION:** (if any)
+  **5. FINAL ANSWER EVALUATION :**(if applicable)
+  
+  Here is the content analysis of students work: 
+
+  {content_analysis_output}
+  ------------------------------
+  **VALUE POINTS**(every VALUE POINT maynot apply to all problem solving)
+  
+  **1.FORMULATING (Setup & Problem Recognition)**
+  (All aspects of FORMULATING doesnt apply to every problem solving, consider only what is applicable)
+  - Did student correctly extract/identify given data?
+  - Was the problem translated into appropriate mathematical language?
+  - Were correct equations/formulas recalled and applied?
+  - Were constraints and assumptions identified?
+  
+  **2.EMPLOYING (Mathematical Execution)**
+  (All aspects of EMPLOYING doesnt apply to every problem solving, consider only what is applicable)
+  - Were mathematical procedures executed correctly?
+  - Was appropriate strategy/method selected?
+  - Were calculations performed accurately?
+  - Were mathematical representations used effectively?
+  
+  **3.INTERPRETING & EVALUATING **
+  (All aspects of INTERPRETING & EVALUATING doesnt apply to every problem solving, consider only what is applicable)
+  - Were intermediate results properly applied?
+  - Was the final outcome of the step reasonable and contextually appropriate?
+  - Was the output for the step presented in correct units/format?
+  - Did student demonstrate understanding of the result's meaning?
+
+  Task Description: 
+  Based on these value points, assess the student by mentioning whether they Demonstrated Competence or Did Not Demonstrate Competence or Not Applicable for that value point
+  
+  GUIDELINES :
+  - Demonstrated Competence: when the student have fully correctly shown the value point according to porblem solving expectations.
+  - Did Not Demonstrate Competence: erros in any aspects of value point,even thoiugh the student may have shown some understanding of the value point.
+  - Not Applicable: if that value point doesnt apply to this problem solving. 
+  
+  **EXPECTED STRUCTURED OUTPUT**:
+  "formulating": "Demonstrated Competence / Did Not Demonstrate Competence / Not Applicable)"
+  "employing": "Demonstrated Competence / Did Not Demonstrate Competence / Not Applicable)"
+  "interpretting_evaluating": "Demonstrated Competence / Did Not Demonstrate Competence / Not Applicable)"
+
