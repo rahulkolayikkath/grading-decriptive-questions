@@ -1,0 +1,27 @@
+test_questions : 
+  - id : 'Question 1'
+    question_id : 'Question 1'
+    type : 'numerical_problem'
+    grade : '10'
+    max_marks : '2'
+    partial_marks_allowed : True
+    subject: 'Maths'
+    chapter: 'Arthematic Progression'
+    question: |
+      Find the Sum of first 40 positive integers divisible by 6.
+    question_contains_figure: False
+    image_description_for_question: ''
+    rubrics_for_extraction: |
+      Step 1: Writing the sequence and identifying the AP
+      Step 2: Using Sum to n terms of AP
+    rubrics_for_evaluation: |  
+      Step 1: Writing the sequence and identifying the AP (1 mark)
+      The numbers that are divisible by 6 are 6,12,18,24 ...
+      AP with a = 6, d = 6
+      Step 2: Using Sum to n terms of AP.(1 Mark)
+      $$S_n = \frac{n}{2}[2a +(n-1)d]$$
+      $$S_{40} =\frac{40}{2}[2*6 + (40-1)6$$
+      $$S_{40} =20[12+39*6]$$
+      $$S_{40} =20[246]$$
+      $$S_{40} =4920$$
+    complexity: "basic"
